@@ -1,15 +1,15 @@
 import sys
 from awsglue.transforms import *
 from awsglue.utils import getResolvedOptions
-from Pyspark.context import SparkContext
+from pyspark.context import SparkContext
 from awsglue.context import GlueContext
-from awsglue.job import job
+from awsglue.job import Job
 import logging
 import boto3
 
 args = getResolvedOptions(sys.argv, ["JOB_NAME"])
 sc = SparkContext()
-gluecontext = GlueContext(sc)
+glueContext = GlueContext(sc)
 spark = glueContext.spark_session
 job = Job(glueContext)
 job.init(args["JOB_NAME"])
@@ -18,45 +18,47 @@ job.init(args["JOB_NAME"])
 region= "us-east-2"
 source_file_path="s3://billionaires-06-25/raw_data/billionaires_data/"
 target_file_path="s3://billionaires-06-25/Processed_data/"
-glueCrawlerName="data_crawler"
+glueCrawlerName="data-crawler"
 
 def process_csv_files(source_file_path: str, target_file_path: str):
     
-    s3bucket_node1=glueContext.create_dynamic_frame.from_options(
-        format_options = {
-            "quoteChar": '"',
-            "withHeader": True,
+    # Script generated for node S3 bucket
+    S3bucket_node1 = glueContext.create_dynamic_frame.from_options(
+        format_options={
+            "quoteChar": '"', 
+            "withHeader": True, 
             "separator": ",",
-            "optimizedPerformance":False
-        },
+            "optimizePerformance": False,
+            },
         connection_type="s3",
         format="csv",
         connection_options={
-            "paths":[
+            "paths": [
                 source_file_path
             ],
             "recurse": True,
         },
-        transformation_ctx="s3bucket_node1",
+        transformation_ctx="S3bucket_node1",
     )
 
-    s3bucket_node3=glueContext.write_dynamic_frame.from_options(
-        frame=s3bucket_node1,
+    # Script generated for node S3 bucket
+    S3bucket_node3 = glueContext.write_dynamic_frame.from_options(
+        frame=S3bucket_node1,
         connection_type="s3",
         format="glueparquet",
         connection_options={
-            "paths": target_file_path,
-            "partitionKeys":[],
+            "path": target_file_path,
+            "partitionKeys": [],
         },
-        format_options={"compression":"gzip"},
-        transformation_ctx="s3bucket_node3",
+        format_options={"compression": "gzip"},
+        transformation_ctx="S3bucket_node3",
     )
 
 def start_glue_crawler(glueCrawlerName, region:str):
     glueClient=boto3.client('glue', region_name=region)
 
     try:
-        results = glueClient.start_crawler(Name = glueCrawlerName)
+        results = glueClient.start_crawler(Name= glueCrawlerName)
         return results
     except Exception as startCrawlerException:
         logging.error("An error occured while starting the Glue crawler: {}".format(glueCrawlerName))

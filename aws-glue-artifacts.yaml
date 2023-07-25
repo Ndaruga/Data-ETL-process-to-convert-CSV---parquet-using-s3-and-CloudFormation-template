@@ -12,11 +12,11 @@ Parameters:
   AWSIAMRoleName:
     Description: Role Name for AWS Glue Job
     Type: String
-    Default: cloudFormtion-s3+glue
+    Default: aws-artifacts-creation-role
   AWSGlueJobName:
     Description: AWS Glue Job Name
     Type: String
-    Default: data-pipeline-etl-demo
+    Default: data-pipeline-etl-job
   AWSGlueCrawlerName:
     Description: AWS Glue Crawler name
     Type: String
@@ -51,6 +51,7 @@ Resources:
         - Effect: Allow
           Principal:
             Service:
+            - cloudformation.amazonaws.com
             - glue.amazonaws.com
             - s3.amazonaws.com
           Action: sts:AssumeRole
@@ -58,7 +59,7 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
         - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
         - arn:aws:iam::aws:policy/AmazonS3FullAccess
-      Path: "/"
+      Path: "/billionaires-06-25/artifact-logs/"
 
 #Create CUR Database
   AWSGlueCatalog:
@@ -74,7 +75,7 @@ Resources:
     Type: AWS::Glue::Job
     Properties: 
       Command:
-        Name: glueetl
+        Name: glue-etl
         PythonVersion: '3'
         ScriptLocation: !Ref GlueJobScriptLocation
       ExecutionProperty:

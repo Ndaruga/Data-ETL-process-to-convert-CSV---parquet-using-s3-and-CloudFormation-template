@@ -3,9 +3,9 @@ import logging
 from botocore.exceptions import ClientError
 
 # set params
-local_file_path = "./The Worlds Billionaires Dataset.csv"
-bucket_name = "billionaires-06-25"
-s3_file= "raw_data/billionaires_data/Worlds_Billionaires_Dataset.csv"
+local_file_path = "{FILENAME}"
+bucket_name = "{BUCKET NAME}"
+s3_file= "{PATH/TO/FILE}"
 
 
 logging.info("File Upload: STARTED")

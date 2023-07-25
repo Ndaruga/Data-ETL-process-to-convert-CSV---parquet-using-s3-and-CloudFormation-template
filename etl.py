@@ -15,10 +15,10 @@ job = Job(glueContext)
 job.init(args["JOB_NAME"])
 
 # set params
-region= "us-east-2"
-source_file_path="s3://billionaires-06-25/raw_data/billionaires_data/"
-target_file_path="s3://billionaires-06-25/Processed_data/"
-glueCrawlerName="data-crawler"
+region= ""
+source_file_path="{SOURCE FILE PATH}"
+target_file_path="{TARGET FILE PATH}"
+glueCrawlerName="{CRAWLER NAME}"
 
 def process_csv_files(source_file_path: str, target_file_path: str):
     

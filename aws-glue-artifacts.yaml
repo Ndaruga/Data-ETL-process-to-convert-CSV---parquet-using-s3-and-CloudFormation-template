@@ -12,32 +12,32 @@ Parameters:
   AWSIAMRoleName:
     Description: Role Name for AWS Glue Job
     Type: String
-    Default: aws-artifacts-creation-role
+    Default: {IAM ROLE}
   AWSGlueJobName:
     Description: AWS Glue Job Name
     Type: String
-    Default: data-pipeline-etl-job
+    Default: {JOB NAME}
   AWSGlueCrawlerName:
     Description: AWS Glue Crawler name
     Type: String
-    Default: data-crawler
+    Default: {CRAWLER NAME}
   AWSGlueCatalogName:
     Description: Name of the data Catalog database
     Type: String
-    Default: worlds-billionaires
+    Default: {CATALOG NAME}
   AWSGlueJobTriggerName:
     Description: AWS Glue job schedule trigger name
     Type: String
-    Default: data-pipeline-glue-trigger
+    Default: {TRIGGER NAME}
   # Replace the following values with your S3 bucket
   GlueJobScriptLocation:
     Description: AWS Glue job script location
     Type: String
-    Default: 's3://billionaires-06-25/scripts/etl.py'
+    Default: '{S3 SCRIPT PATH}'
   CrawlerS3Path:
     Description: Target file name for AWS Crawler
     Type: String
-    Default: 's3://billionaires-06-25/Processed_data/'
+    Default: '{PATH TO CRAWLER STORAGE}'
 
 Resources:
 #Creating IAM Role and attaching build-in policies
